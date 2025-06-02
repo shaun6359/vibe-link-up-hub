@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles } from 'lucide-react';
+import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,10 +8,10 @@ import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [animationPhase, setAnimationPhase] = useState(0);
-  const [showContent, setShowContent] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toast } = useToast();
 
   const phrases = [
@@ -21,16 +21,14 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setAnimationPhase(1), 1000);
-    const timer2 = setTimeout(() => setAnimationPhase(2), 3000);
-    const timer3 = setTimeout(() => setAnimationPhase(3), 5000);
-    const timer4 = setTimeout(() => setShowContent(true), 7500);
+    const timer1 = setTimeout(() => setAnimationPhase(1), 1500);
+    const timer2 = setTimeout(() => setAnimationPhase(2), 3500);
+    const timer3 = setTimeout(() => setAnimationPhase(3), 5500);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
-      clearTimeout(timer4);
     };
   }, []);
 
@@ -58,35 +56,105 @@ const Index = () => {
     setMessage('');
   };
 
-  if (!showContent) {
-    return (
-      <div className="min-h-screen bg-brand-black flex items-center justify-center overflow-hidden">
-        <div className="text-center">
-          {phrases.map((phrase, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${
-                animationPhase === index
-                  ? 'opacity-100 animate-fade-in-up'
-                  : animationPhase > index
-                  ? 'opacity-0 animate-fade-out-down'
-                  : 'opacity-0'
-              }`}
-            >
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-inter font-black text-white tracking-tight">
-                {phrase}
-              </h1>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-brand-black text-white font-inter">
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-black/95 backdrop-blur-sm border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <img 
+                src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
+                alt="What's Poppin Logo" 
+                className="w-8 h-8"
+              />
+              <span className="text-xl font-black text-white">what's poppin</span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <button 
+                onClick={() => scrollToSection('hero')}
+                className="text-gray-300 hover:text-white transition-colors font-medium"
+              >
+                home
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')}
+                className="text-gray-300 hover:text-white transition-colors font-medium"
+              >
+                about
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="text-gray-300 hover:text-white transition-colors font-medium"
+              >
+                contact
+              </button>
+              <Button 
+                onClick={() => scrollToSection('hero')}
+                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold px-6"
+              >
+                join waitlist
+              </Button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:text-gray-300 transition-colors"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 border-t border-white/10">
+                <button 
+                  onClick={() => scrollToSection('hero')}
+                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                >
+                  home
+                </button>
+                <button 
+                  onClick={() => scrollToSection('about')}
+                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                >
+                  about
+                </button>
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                >
+                  contact
+                </button>
+                <Button 
+                  onClick={() => scrollToSection('hero')}
+                  className="w-full mt-2 bg-brand-red hover:bg-brand-red/90 text-white font-bold"
+                >
+                  join waitlist
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 relative">
+      <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
         <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
             src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
@@ -97,6 +165,26 @@ const Index = () => {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-gradient-to-r from-brand-red to-brand-purple bg-clip-text text-transparent">
             what's poppin
           </h1>
+
+          {/* Animation phrases positioned below the main title */}
+          <div className="relative h-16 mb-8 flex items-center justify-center">
+            {phrases.map((phrase, index) => (
+              <div
+                key={index}
+                className={`absolute transition-all duration-1000 ${
+                  animationPhase === index
+                    ? 'opacity-100 animate-fade-in-up'
+                    : animationPhase > index
+                    ? 'opacity-0 animate-fade-out-down'
+                    : 'opacity-0'
+                }`}
+              >
+                <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-purple">
+                  {phrase}
+                </p>
+              </div>
+            ))}
+          </div>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-8 font-medium">
             tinder for events. swipe your way to the best vibes in town.
