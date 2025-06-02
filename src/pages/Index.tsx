@@ -173,14 +173,10 @@ const Index = () => {
           <img 
             src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
             alt="What's Poppin Logo" 
-            className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-8 animate-float"
+            className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto mb-8 animate-float"
           />
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-gradient-to-r from-brand-red to-brand-purple bg-clip-text text-transparent">
-            what's poppin
-          </h1>
 
-          {/* Animation phrases positioned below the main title */}
+          {/* Animation phrases positioned below the logo */}
           <div className="relative h-16 mb-8 flex items-center justify-center">
             {phrases.map((phrase, index) => (
               <div
