@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -73,8 +72,8 @@ const Index = () => {
             {/* Logo */}
             <div className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
-                alt="What's Poppin Logo" 
+                src="/lovable-uploads/70518438-c73f-45c9-b149-e6cae77612ee.png" 
+                alt="What's Poppin Balloons" 
                 className="w-8 h-8"
               />
               <span className="text-xl font-black text-white">what's poppin</span>
