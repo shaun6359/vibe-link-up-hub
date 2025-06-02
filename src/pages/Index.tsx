@@ -20,14 +20,29 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setAnimationPhase(1), 1500);
-    const timer2 = setTimeout(() => setAnimationPhase(2), 3500);
-    const timer3 = setTimeout(() => setAnimationPhase(3), 5500);
+    const animationLoop = () => {
+      const timer1 = setTimeout(() => setAnimationPhase(1), 1500);
+      const timer2 = setTimeout(() => setAnimationPhase(2), 3500);
+      const timer3 = setTimeout(() => setAnimationPhase(0), 5500); // Reset to start the loop again
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+      };
+    };
+
+    // Start the initial animation
+    const cleanup1 = animationLoop();
+
+    // Set up the infinite loop
+    const interval = setInterval(() => {
+      animationLoop();
+    }, 6000); // Total cycle time
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
+      cleanup1();
+      clearInterval(interval);
     };
   }, []);
 
@@ -74,7 +89,7 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/70518438-c73f-45c9-b149-e6cae77612ee.png" 
                 alt="What's Poppin Balloons" 
-                className="w-8 h-8"
+                className="w-12 h-12"
               />
               <span className="text-xl font-black text-white">what's poppin</span>
             </div>
@@ -222,10 +237,6 @@ const Index = () => {
               <span>vibe together</span>
             </div>
           </div>
-        </div>
-        
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-pulse-slow">
-          <div className="w-1 h-8 bg-gradient-to-b from-brand-red to-transparent rounded-full"></div>
         </div>
       </section>
 
