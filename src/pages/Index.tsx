@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -79,7 +80,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-brand-black text-white font-inter">
+    <div className="min-h-screen bg-brand-black font-inter" style={{ color: '#e4e2dd' }}>
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-black/95 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,36 +88,39 @@ const Index = () => {
             {/* Logo */}
             <div className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/70518438-c73f-45c9-b149-e6cae77612ee.png" 
+                src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
                 alt="What's Poppin Balloons" 
-                className="w-12 h-12"
+                className="w-16 h-16"
               />
-              <span className="text-xl font-black text-white">what's poppin</span>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <button 
                 onClick={() => scrollToSection('hero')}
-                className="text-gray-300 hover:text-white transition-colors font-medium"
+                className="hover:text-white transition-colors font-medium"
+                style={{ color: '#e4e2dd' }}
               >
                 home
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
-                className="text-gray-300 hover:text-white transition-colors font-medium"
+                className="hover:text-white transition-colors font-medium"
+                style={{ color: '#e4e2dd' }}
               >
                 about
               </button>
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="text-gray-300 hover:text-white transition-colors font-medium"
+                className="hover:text-white transition-colors font-medium"
+                style={{ color: '#e4e2dd' }}
               >
                 contact
               </button>
               <Button 
                 onClick={() => scrollToSection('hero')}
-                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold px-6"
+                className="bg-brand-red hover:bg-brand-red/90 font-bold px-6"
+                style={{ color: '#e4e2dd' }}
               >
                 join waitlist
               </Button>
@@ -126,7 +130,8 @@ const Index = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white hover:text-gray-300 transition-colors"
+                className="hover:text-white transition-colors"
+                style={{ color: '#e4e2dd' }}
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -139,25 +144,29 @@ const Index = () => {
               <div className="px-2 pt-2 pb-3 space-y-1 border-t border-white/10">
                 <button 
                   onClick={() => scrollToSection('hero')}
-                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                  className="block w-full text-left px-3 py-2 hover:text-white transition-colors font-medium"
+                  style={{ color: '#e4e2dd' }}
                 >
                   home
                 </button>
                 <button 
                   onClick={() => scrollToSection('about')}
-                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                  className="block w-full text-left px-3 py-2 hover:text-white transition-colors font-medium"
+                  style={{ color: '#e4e2dd' }}
                 >
                   about
                 </button>
                 <button 
                   onClick={() => scrollToSection('contact')}
-                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                  className="block w-full text-left px-3 py-2 hover:text-white transition-colors font-medium"
+                  style={{ color: '#e4e2dd' }}
                 >
                   contact
                 </button>
                 <Button 
                   onClick={() => scrollToSection('hero')}
-                  className="w-full mt-2 bg-brand-red hover:bg-brand-red/90 text-white font-bold"
+                  className="w-full mt-2 bg-brand-red hover:bg-brand-red/90 font-bold"
+                  style={{ color: '#e4e2dd' }}
                 >
                   join waitlist
                 </Button>
@@ -207,12 +216,14 @@ const Index = () => {
                 placeholder="drop your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder-gray-400 text-lg py-6"
+                className="bg-white/10 border-white/20 text-lg py-6"
+                style={{ color: '#e4e2dd' }}
                 required
               />
               <Button 
                 type="submit"
-                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+                className="bg-brand-red hover:bg-brand-red/90 font-bold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+                style={{ color: '#e4e2dd' }}
               >
                 join waitlist
               </Button>
@@ -255,7 +266,7 @@ const Index = () => {
               and never miss out on the energy again.
             </p>
             
-            <p className="text-2xl font-semibold text-white">
+            <p className="text-2xl font-semibold" style={{ color: '#e4e2dd' }}>
               it's time to stop asking "what's poppin?" and start knowing. 🔥
             </p>
           </div>
@@ -263,19 +274,19 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 mt-16">
             <div className="bg-white/5 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-brand-red/50 transition-all duration-300 hover:scale-105">
               <Sparkles className="w-12 h-12 text-brand-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">discover events</h3>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#e4e2dd' }}>discover events</h3>
               <p className="text-gray-400">swipe through curated events that match your vibe and interests</p>
             </div>
             
             <div className="bg-white/5 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-brand-purple/50 transition-all duration-300 hover:scale-105">
               <Users className="w-12 h-12 text-brand-purple mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">connect with people</h3>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#e4e2dd' }}>connect with people</h3>
               <p className="text-gray-400">meet like-minded people who are going to the same events</p>
             </div>
             
             <div className="bg-white/5 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-brand-red/50 transition-all duration-300 hover:scale-105">
               <Heart className="w-12 h-12 text-brand-red mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">create memories</h3>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#e4e2dd' }}>create memories</h3>
               <p className="text-gray-400">turn random nights into unforgettable experiences</p>
             </div>
           </div>
@@ -300,7 +311,8 @@ const Index = () => {
                 placeholder="your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder-gray-400 text-lg py-6"
+                className="bg-white/10 border-white/20 text-lg py-6"
+                style={{ color: '#e4e2dd' }}
                 required
               />
               <Input
@@ -308,7 +320,8 @@ const Index = () => {
                 placeholder="your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder-gray-400 text-lg py-6"
+                className="bg-white/10 border-white/20 text-lg py-6"
+                style={{ color: '#e4e2dd' }}
                 required
               />
             </div>
@@ -317,13 +330,15 @@ const Index = () => {
               placeholder="what's on your mind?"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="bg-white/10 border-white/20 text-white placeholder-gray-400 text-lg min-h-32 resize-none"
+              className="bg-white/10 border-white/20 text-lg min-h-32 resize-none"
+              style={{ color: '#e4e2dd' }}
               required
             />
             
             <Button 
               type="submit"
-              className="w-full bg-brand-purple hover:bg-brand-purple/90 text-white font-bold py-6 text-lg transition-all duration-300 hover:scale-105"
+              className="w-full bg-brand-purple hover:bg-brand-purple/90 font-bold py-6 text-lg transition-all duration-300 hover:scale-105"
+              style={{ color: '#e4e2dd' }}
             >
               <Send className="w-5 h-5 mr-2" />
               send message
@@ -344,11 +359,11 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
-              src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
+              src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
               alt="What's Poppin Logo" 
               className="w-8 h-8"
             />
-            <span className="text-2xl font-black">what's poppin</span>
+            <span className="text-2xl font-black" style={{ color: '#e4e2dd' }}>what's poppin</span>
           </div>
           
           <p className="text-gray-400 mb-6">
