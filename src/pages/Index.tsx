@@ -20,29 +20,32 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    const animationLoop = () => {
+    const runAnimation = () => {
+      // Start with phrase 0
       setAnimationPhase(0);
-      const timer1 = setTimeout(() => setAnimationPhase(1), 2000);
-      const timer2 = setTimeout(() => setAnimationPhase(2), 4000);
-      const timer3 = setTimeout(() => setAnimationPhase(0), 6000);
-
+      
+      // Move to phrase 1 after 3 seconds
+      const timer1 = setTimeout(() => setAnimationPhase(1), 3000);
+      
+      // Move to phrase 2 after 6 seconds
+      const timer2 = setTimeout(() => setAnimationPhase(2), 6000);
+      
       return () => {
         clearTimeout(timer1);
         clearTimeout(timer2);
-        clearTimeout(timer3);
       };
     };
 
-    // Start the initial animation
-    const cleanup1 = animationLoop();
-
-    // Set up the infinite loop
+    // Run initial animation
+    const cleanup = runAnimation();
+    
+    // Set up interval to repeat every 9 seconds
     const interval = setInterval(() => {
-      animationLoop();
-    }, 7000); // Longer cycle time for smoother transitions
+      runAnimation();
+    }, 9000);
 
     return () => {
-      cleanup1();
+      cleanup();
       clearInterval(interval);
     };
   }, []);
@@ -95,7 +98,7 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
                 alt="What's Poppin Balloons" 
-                className="w-20 h-20 cursor-pointer hover:scale-105 transition-transform"
+                className="w-24 h-24 cursor-pointer hover:scale-105 transition-transform"
                 onClick={scrollToTop}
               />
             </div>
@@ -196,7 +199,7 @@ const Index = () => {
             {phrases.map((phrase, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-in-out ${
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
                   animationPhase === index
                     ? 'opacity-100 transform translate-y-0'
                     : 'opacity-0 transform translate-y-4'
