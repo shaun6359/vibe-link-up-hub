@@ -367,7 +367,7 @@ const Index = () => {
             <img 
               src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
               alt="What's Poppin Logo" 
-              className="w-12 h-12"
+              className="w-32 h-32"
             />
             <span className="text-2xl font-black" style={{ color: '#e4e2dd' }}>what's poppin</span>
           </div>
