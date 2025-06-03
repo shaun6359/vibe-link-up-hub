@@ -354,7 +354,7 @@ const Index = () => {
           <div className="flex justify-center gap-8 mt-12 text-gray-400">
             <div className="flex items-center gap-2 hover:text-brand-red transition-colors cursor-pointer">
               <Mail className="w-5 h-5" />
-              <span>hello@whatspoppin.app</span>
+              <span>help@whatspoppin.info</span>
             </div>
           </div>
         </div>
