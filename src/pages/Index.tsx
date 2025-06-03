@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,9 +21,10 @@ const Index = () => {
 
   useEffect(() => {
     const animationLoop = () => {
-      const timer1 = setTimeout(() => setAnimationPhase(1), 1500);
-      const timer2 = setTimeout(() => setAnimationPhase(2), 3500);
-      const timer3 = setTimeout(() => setAnimationPhase(0), 5500); // Reset to start the loop again
+      setAnimationPhase(0);
+      const timer1 = setTimeout(() => setAnimationPhase(1), 2000);
+      const timer2 = setTimeout(() => setAnimationPhase(2), 4000);
+      const timer3 = setTimeout(() => setAnimationPhase(0), 6000);
 
       return () => {
         clearTimeout(timer1);
@@ -39,7 +39,7 @@ const Index = () => {
     // Set up the infinite loop
     const interval = setInterval(() => {
       animationLoop();
-    }, 6000); // Total cycle time
+    }, 7000); // Longer cycle time for smoother transitions
 
     return () => {
       cleanup1();
@@ -192,26 +192,24 @@ const Index = () => {
           />
 
           {/* Animation phrases positioned below the logo */}
-          <div className="relative h-16 mb-8 flex items-center justify-center">
+          <div className="relative min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] mb-8 flex items-center justify-center">
             {phrases.map((phrase, index) => (
               <div
                 key={index}
-                className={`absolute transition-all duration-1000 ${
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-in-out ${
                   animationPhase === index
-                    ? 'opacity-100 animate-fade-in-up'
-                    : animationPhase > index
-                    ? 'opacity-0 animate-fade-out-down'
-                    : 'opacity-0'
+                    ? 'opacity-100 transform translate-y-0'
+                    : 'opacity-0 transform translate-y-4'
                 }`}
               >
-                <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-purple">
+                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-brand-purple text-center px-4">
                   {phrase}
                 </p>
               </div>
             ))}
           </div>
           
-          <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-8 font-medium">
+          <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-300 mb-8 font-medium px-4">
             tinder for events. swipe your way to the best vibes in town.
           </p>
           
