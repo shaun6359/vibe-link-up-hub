@@ -79,6 +79,11 @@ const Index = () => {
     setIsMenuOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-brand-black font-inter" style={{ color: '#e4e2dd' }}>
       {/* Navigation Bar */}
@@ -90,7 +95,8 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
                 alt="What's Poppin Balloons" 
-                className="w-16 h-16"
+                className="w-20 h-20 cursor-pointer hover:scale-105 transition-transform"
+                onClick={scrollToTop}
               />
             </div>
 
@@ -361,7 +367,7 @@ const Index = () => {
             <img 
               src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
               alt="What's Poppin Logo" 
-              className="w-8 h-8"
+              className="w-12 h-12"
             />
             <span className="text-2xl font-black" style={{ color: '#e4e2dd' }}>what's poppin</span>
           </div>
