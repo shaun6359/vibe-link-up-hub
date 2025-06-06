@@ -66,7 +66,7 @@ const Index = () => {
         {
           from_waitlist_email: email,
         },
-        'YOUR_PUBLIC_KEY' // You'll need to replace this with your actual EmailJS public key
+        'd8g8k3zCkTO2ffmqb' // Your actual EmailJS public key
       );
 
       toast({
@@ -101,7 +101,7 @@ const Index = () => {
           your_email: email,
           message: message,
         },
-        'YOUR_PUBLIC_KEY' // You'll need to replace this with your actual EmailJS public key
+        'd8g8k3zCkTO2ffmqb' // Your actual EmailJS public key
       );
 
       toast({
