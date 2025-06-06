@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import emailjs from '@emailjs/browser';
 
 const Index = () => {
   const [animationPhase, setAnimationPhase] = useState(0);
@@ -11,6 +12,8 @@ const Index = () => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
+  const [isContactLoading, setIsContactLoading] = useState(false);
   const { toast } = useToast();
 
   const phrases = [
@@ -50,28 +53,74 @@ const Index = () => {
     };
   }, []);
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     
-    toast({
-      title: "Welcome to the vibe! 🎉",
-      description: "You're on the waitlist! We'll hit you up when we're ready to pop off.",
-    });
-    setEmail('');
+    setIsWaitlistLoading(true);
+
+    try {
+      await emailjs.send(
+        'service_mp0ej8w', // Your waitlist service ID
+        'template_er0fq55', // Your waitlist template ID
+        {
+          from_waitlist_email: email,
+        },
+        'YOUR_PUBLIC_KEY' // You'll need to replace this with your actual EmailJS public key
+      );
+
+      toast({
+        title: "Welcome to the vibe! 🎉",
+        description: "You're on the waitlist! We'll hit you up when we're ready to pop off.",
+      });
+      setEmail('');
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Failed to join waitlist. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsWaitlistLoading(false);
+    }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
-    toast({
-      title: "Message sent! 💫",
-      description: "We'll get back to you soon. Thanks for reaching out!",
-    });
-    setName('');
-    setEmail('');
-    setMessage('');
+    setIsContactLoading(true);
+
+    try {
+      await emailjs.send(
+        'service_dai1njy', // Your contact service ID
+        'template_174kjlo', // Your contact template ID
+        {
+          your_name: name,
+          your_email: email,
+          message: message,
+        },
+        'YOUR_PUBLIC_KEY' // You'll need to replace this with your actual EmailJS public key
+      );
+
+      toast({
+        title: "Message sent! 💫",
+        description: "We'll get back to you soon. Thanks for reaching out!",
+      });
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsContactLoading(false);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -226,13 +275,15 @@ const Index = () => {
                 className="bg-white/10 border-white/20 text-lg py-6"
                 style={{ color: '#e4e2dd' }}
                 required
+                disabled={isWaitlistLoading}
               />
               <Button 
                 type="submit"
                 className="bg-brand-red hover:bg-brand-red/90 font-bold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
                 style={{ color: '#e4e2dd' }}
+                disabled={isWaitlistLoading}
               >
-                join waitlist
+                {isWaitlistLoading ? 'joining...' : 'join waitlist'}
               </Button>
             </div>
           </form>
@@ -321,6 +372,7 @@ const Index = () => {
                 className="bg-white/10 border-white/20 text-lg py-6"
                 style={{ color: '#e4e2dd' }}
                 required
+                disabled={isContactLoading}
               />
               <Input
                 type="email"
@@ -330,6 +382,7 @@ const Index = () => {
                 className="bg-white/10 border-white/20 text-lg py-6"
                 style={{ color: '#e4e2dd' }}
                 required
+                disabled={isContactLoading}
               />
             </div>
             
@@ -340,15 +393,17 @@ const Index = () => {
               className="bg-white/10 border-white/20 text-lg min-h-32 resize-none"
               style={{ color: '#e4e2dd' }}
               required
+              disabled={isContactLoading}
             />
             
             <Button 
               type="submit"
               className="w-full bg-brand-purple hover:bg-brand-purple/90 font-bold py-6 text-lg transition-all duration-300 hover:scale-105"
               style={{ color: '#e4e2dd' }}
+              disabled={isContactLoading}
             >
               <Send className="w-5 h-5 mr-2" />
-              send message
+              {isContactLoading ? 'sending...' : 'send message'}
             </Button>
           </form>
           
