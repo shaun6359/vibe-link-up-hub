@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,8 +14,6 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(false);
-  const [isAnimatedTextVisible, setIsAnimatedTextVisible] = useState(false);
-  const animatedTextRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   const phrases = [
@@ -53,31 +50,6 @@ const Index = () => {
     return () => {
       cleanup();
       clearInterval(interval);
-    };
-  }, []);
-
-  // Intersection Observer for scroll-triggered animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsAnimatedTextVisible(true);
-        }
-      },
-      {
-        threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
-      }
-    );
-
-    if (animatedTextRef.current) {
-      observer.observe(animatedTextRef.current);
-    }
-
-    return () => {
-      if (animatedTextRef.current) {
-        observer.unobserve(animatedTextRef.current);
-      }
     };
   }, []);
 
@@ -173,7 +145,7 @@ const Index = () => {
             {/* Logo */}
             <div className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
+                src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
                 alt="What's Poppin Balloons" 
                 className="w-24 h-24 cursor-pointer hover:scale-105 transition-transform"
                 onClick={scrollToTop}
@@ -266,10 +238,28 @@ const Index = () => {
       <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
         <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
-            src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
+            src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
             alt="What's Poppin Logo" 
             className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto mb-8 animate-float"
           />
+
+          {/* Animation phrases positioned below the logo */}
+          <div className="relative min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] mb-8 flex items-center justify-center">
+            {phrases.map((phrase, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
+                  animationPhase === index
+                    ? 'opacity-100 transform translate-y-0'
+                    : 'opacity-0 transform translate-y-4'
+                }`}
+              >
+                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-brand-purple text-center px-4">
+                  {phrase}
+                </p>
+              </div>
+            ))}
+          </div>
           
           <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-300 mb-8 font-medium px-4">
             tinder for events. swipe your way to the best vibes in town.
@@ -311,35 +301,6 @@ const Index = () => {
               <Heart className="w-4 h-4" />
               <span>vibe together</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Animated Text Section */}
-      <section className="py-16 px-4">
-        <div 
-          ref={animatedTextRef}
-          className={`text-center max-w-6xl mx-auto transition-all duration-1000 ease-out ${
-            isAnimatedTextVisible 
-              ? 'opacity-100 transform translate-y-0' 
-              : 'opacity-0 transform translate-y-8'
-          }`}
-        >
-          <div className="relative min-h-[6rem] md:min-h-[8rem] lg:min-h-[10rem] flex items-center justify-center">
-            {phrases.map((phrase, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
-                  animationPhase === index
-                    ? 'opacity-100 transform translate-y-0'
-                    : 'opacity-0 transform translate-y-4'
-                }`}
-              >
-                <p className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-brand-purple text-center px-4">
-                  {phrase}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -460,7 +421,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
-              src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
+              src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
               alt="What's Poppin Logo" 
               className="w-32 h-32"
             />
