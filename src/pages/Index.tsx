@@ -145,7 +145,7 @@ const Index = () => {
             {/* Logo */}
             <div className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
+                src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
                 alt="What's Poppin Balloons" 
                 className="w-24 h-24 cursor-pointer hover:scale-105 transition-transform"
                 onClick={scrollToTop}
@@ -238,7 +238,7 @@ const Index = () => {
       <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
         <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
-            src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
+            src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
             alt="What's Poppin Logo" 
             className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto mb-8 animate-float"
           />
@@ -421,7 +421,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
-              src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
+              src="/lovable-uploads/87a85d13-267c-4993-ae1c-a12fb963b452.png" 
               alt="What's Poppin Logo" 
               className="w-32 h-32"
             />
