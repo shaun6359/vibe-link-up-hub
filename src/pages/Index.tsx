@@ -14,12 +14,6 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(false);
-  const [scrollOpacities, setScrollOpacities] = useState({
-    hero: 1,
-    about: 0,
-    contact: 0,
-    footer: 0
-  });
   const { toast } = useToast();
 
   const phrases = [
@@ -57,45 +51,6 @@ const Index = () => {
       cleanup();
       clearInterval(interval);
     };
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // Calculate opacity for each section
-      const sections = ['hero', 'about', 'contact', 'footer'];
-      const newOpacities = {};
-      
-      sections.forEach(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const elementTop = rect.top + scrollY;
-          const elementHeight = rect.height;
-          
-          // Calculate fade zone
-          const fadeStart = elementTop - windowHeight * 0.8;
-          const fadeEnd = elementTop + elementHeight - windowHeight * 0.2;
-          
-          let opacity = 0;
-          if (scrollY >= fadeStart && scrollY <= fadeEnd) {
-            const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
-            opacity = Math.sin(progress * Math.PI);
-          }
-          
-          newOpacities[sectionId] = Math.max(0, Math.min(1, opacity));
-        }
-      });
-      
-      setScrollOpacities(newOpacities);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
@@ -280,17 +235,31 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section 
-        id="hero" 
-        className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16 transition-opacity duration-500"
-        style={{ opacity: scrollOpacities.hero }}
-      >
+      <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
         <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
             src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
             alt="What's Poppin Logo" 
             className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto mb-8 animate-float"
           />
+
+          {/* Animation phrases positioned below the logo */}
+          <div className="relative min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] mb-8 flex items-center justify-center">
+            {phrases.map((phrase, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
+                  animationPhase === index
+                    ? 'opacity-100 transform translate-y-0'
+                    : 'opacity-0 transform translate-y-4'
+                }`}
+              >
+                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-brand-purple text-center px-4">
+                  {phrase}
+                </p>
+              </div>
+            ))}
+          </div>
           
           <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-300 mb-8 font-medium px-4">
             tinder for events. swipe your way to the best vibes in town.
@@ -336,37 +305,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Animated Text Section */}
-      <section id="animated-text" className="py-24 px-4">
-        <div className="text-center max-w-4xl mx-auto">
-          <div 
-            className="relative min-h-[8rem] md:min-h-[10rem] lg:min-h-[12rem] flex items-center justify-center transition-opacity duration-500"
-            style={{ opacity: scrollOpacity }}
-          >
-            {phrases.map((phrase, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
-                  animationPhase === index
-                    ? 'opacity-100 transform translate-y-0'
-                    : 'opacity-0 transform translate-y-4'
-                }`}
-              >
-                <p className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-brand-purple text-center px-4">
-                  {phrase}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* About Section */}
-      <section 
-        id="about" 
-        className="py-24 px-4 transition-opacity duration-500"
-        style={{ opacity: scrollOpacities.about }}
-      >
+      <section id="about" className="py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-brand-red">
             about us
@@ -412,11 +352,7 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section 
-        id="contact" 
-        className="py-24 px-4 bg-white/5 transition-opacity duration-500"
-        style={{ opacity: scrollOpacities.contact }}
-      >
+      <section id="contact" className="py-24 px-4 bg-white/5">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-center text-brand-purple">
             hit us up
@@ -481,10 +417,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer 
-        className="py-12 px-4 border-t border-white/10 transition-opacity duration-500"
-        style={{ opacity: scrollOpacities.footer }}
-      >
+      <footer className="py-12 px-4 border-t border-white/10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
