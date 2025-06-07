@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,7 +14,12 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(false);
-  const [scrollOpacity, setScrollOpacity] = useState(0);
+  const [scrollOpacities, setScrollOpacities] = useState({
+    hero: 1,
+    about: 0,
+    contact: 0,
+    footer: 0
+  });
   const { toast } = useToast();
 
   const phrases = [
@@ -59,25 +63,33 @@ const Index = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const animatedTextSection = document.getElementById('animated-text');
       
-      if (animatedTextSection) {
-        const rect = animatedTextSection.getBoundingClientRect();
-        const sectionTop = rect.top + scrollY;
-        const sectionHeight = rect.height;
-        
-        // Calculate opacity based on scroll position
-        const startFade = sectionTop - windowHeight;
-        const endFade = sectionTop + sectionHeight;
-        
-        if (scrollY >= startFade && scrollY <= endFade) {
-          const progress = (scrollY - startFade) / (endFade - startFade);
-          const opacity = Math.sin(progress * Math.PI); // Creates fade in and fade out
-          setScrollOpacity(Math.max(0, Math.min(1, opacity)));
-        } else {
-          setScrollOpacity(0);
+      // Calculate opacity for each section
+      const sections = ['hero', 'about', 'contact', 'footer'];
+      const newOpacities = {};
+      
+      sections.forEach(sectionId => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const elementTop = rect.top + scrollY;
+          const elementHeight = rect.height;
+          
+          // Calculate fade zone
+          const fadeStart = elementTop - windowHeight * 0.8;
+          const fadeEnd = elementTop + elementHeight - windowHeight * 0.2;
+          
+          let opacity = 0;
+          if (scrollY >= fadeStart && scrollY <= fadeEnd) {
+            const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+            opacity = Math.sin(progress * Math.PI);
+          }
+          
+          newOpacities[sectionId] = Math.max(0, Math.min(1, opacity));
         }
-      }
+      });
+      
+      setScrollOpacities(newOpacities);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -268,7 +280,11 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
+      <section 
+        id="hero" 
+        className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16 transition-opacity duration-500"
+        style={{ opacity: scrollOpacities.hero }}
+      >
         <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
             src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
@@ -346,7 +362,11 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-4">
+      <section 
+        id="about" 
+        className="py-24 px-4 transition-opacity duration-500"
+        style={{ opacity: scrollOpacities.about }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-brand-red">
             about us
@@ -392,7 +412,11 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-4 bg-white/5">
+      <section 
+        id="contact" 
+        className="py-24 px-4 bg-white/5 transition-opacity duration-500"
+        style={{ opacity: scrollOpacities.contact }}
+      >
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-center text-brand-purple">
             hit us up
@@ -457,7 +481,10 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-white/10">
+      <footer 
+        className="py-12 px-4 border-t border-white/10 transition-opacity duration-500"
+        style={{ opacity: scrollOpacities.footer }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
