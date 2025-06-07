@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,12 +14,6 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(false);
-  const [scrollOpacity, setScrollOpacity] = useState({
-    hero: 1,
-    about: 0,
-    contact: 0,
-    footer: 0,
-  });
   const { toast } = useToast();
 
   const phrases = [
@@ -58,44 +51,6 @@ const Index = () => {
       cleanup();
       clearInterval(interval);
     };
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'about', 'contact', 'footer'];
-      const newOpacity = { ...scrollOpacity };
-
-      sections.forEach(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          
-          // Calculate opacity based on element's position in viewport
-          const elementTop = rect.top;
-          const elementHeight = rect.height;
-          const elementCenter = elementTop + elementHeight / 2;
-          
-          let opacity = 0;
-          
-          // Fade in as element enters viewport
-          if (elementCenter >= 0 && elementCenter <= windowHeight) {
-            const distanceFromCenter = Math.abs(elementCenter - windowHeight / 2);
-            const maxDistance = windowHeight / 2;
-            opacity = Math.max(0, 1 - (distanceFromCenter / maxDistance));
-          }
-          
-          newOpacity[sectionId as keyof typeof scrollOpacity] = opacity;
-        }
-      });
-
-      setScrollOpacity(newOpacity);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-    
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
@@ -281,10 +236,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 relative pt-16">
-        <div 
-          className="text-center max-w-4xl mx-auto animate-fade-in-up transition-opacity duration-700"
-          style={{ opacity: scrollOpacity.hero }}
-        >
+        <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
           <img 
             src="/lovable-uploads/47a0c5b2-5564-4f4c-babd-e7a63d6741a6.png" 
             alt="What's Poppin Logo" 
@@ -355,10 +307,7 @@ const Index = () => {
 
       {/* About Section */}
       <section id="about" className="py-24 px-4">
-        <div 
-          className="max-w-4xl mx-auto text-center transition-opacity duration-700"
-          style={{ opacity: scrollOpacity.about }}
-        >
+        <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-brand-red">
             about us
           </h2>
@@ -404,10 +353,7 @@ const Index = () => {
 
       {/* Contact Section */}
       <section id="contact" className="py-24 px-4 bg-white/5">
-        <div 
-          className="max-w-2xl mx-auto transition-opacity duration-700"
-          style={{ opacity: scrollOpacity.contact }}
-        >
+        <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-center text-brand-purple">
             hit us up
           </h2>
@@ -471,11 +417,8 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer id="footer" className="py-12 px-4 border-t border-white/10">
-        <div 
-          className="max-w-4xl mx-auto text-center transition-opacity duration-700"
-          style={{ opacity: scrollOpacity.footer }}
-        >
+      <footer className="py-12 px-4 border-t border-white/10">
+        <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center items-center gap-4 mb-6">
             <img 
               src="/lovable-uploads/fbbfafe1-6b0a-4a1d-99a7-ec6b58de5b7b.png" 
