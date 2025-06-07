@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, Heart, Calendar, Users, Sparkles, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,7 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
   const [isContactLoading, setIsContactLoading] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(0);
   const { toast } = useToast();
 
   const phrases = [
@@ -51,6 +53,37 @@ const Index = () => {
       cleanup();
       clearInterval(interval);
     };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const animatedTextSection = document.getElementById('animated-text');
+      
+      if (animatedTextSection) {
+        const rect = animatedTextSection.getBoundingClientRect();
+        const sectionTop = rect.top + scrollY;
+        const sectionHeight = rect.height;
+        
+        // Calculate opacity based on scroll position
+        const startFade = sectionTop - windowHeight;
+        const endFade = sectionTop + sectionHeight;
+        
+        if (scrollY >= startFade && scrollY <= endFade) {
+          const progress = (scrollY - startFade) / (endFade - startFade);
+          const opacity = Math.sin(progress * Math.PI); // Creates fade in and fade out
+          setScrollOpacity(Math.max(0, Math.min(1, opacity)));
+        } else {
+          setScrollOpacity(0);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
@@ -242,24 +275,6 @@ const Index = () => {
             alt="What's Poppin Logo" 
             className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto mb-8 animate-float"
           />
-
-          {/* Animation phrases positioned below the logo */}
-          <div className="relative min-h-[4rem] md:min-h-[5rem] lg:min-h-[6rem] mb-8 flex items-center justify-center">
-            {phrases.map((phrase, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
-                  animationPhase === index
-                    ? 'opacity-100 transform translate-y-0'
-                    : 'opacity-0 transform translate-y-4'
-                }`}
-              >
-                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-brand-purple text-center px-4">
-                  {phrase}
-                </p>
-              </div>
-            ))}
-          </div>
           
           <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-300 mb-8 font-medium px-4">
             tinder for events. swipe your way to the best vibes in town.
@@ -301,6 +316,31 @@ const Index = () => {
               <Heart className="w-4 h-4" />
               <span>vibe together</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Animated Text Section */}
+      <section id="animated-text" className="py-24 px-4">
+        <div className="text-center max-w-4xl mx-auto">
+          <div 
+            className="relative min-h-[8rem] md:min-h-[10rem] lg:min-h-[12rem] flex items-center justify-center transition-opacity duration-500"
+            style={{ opacity: scrollOpacity }}
+          >
+            {phrases.map((phrase, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
+                  animationPhase === index
+                    ? 'opacity-100 transform translate-y-0'
+                    : 'opacity-0 transform translate-y-4'
+                }`}
+              >
+                <p className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-brand-purple text-center px-4">
+                  {phrase}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
